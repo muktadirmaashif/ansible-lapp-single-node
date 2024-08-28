@@ -1,0 +1,8 @@
+---
+- name: setup lamp stack single node
+  hosts: lamp
+  roles: 
+    - common
+#    - web
+#    - app
+#    - db

@@ -1,0 +1,7 @@
+---
+packages_to_install:
+  - network-manager
+  - firewalld
+  - wget
+  - curl
+  - git

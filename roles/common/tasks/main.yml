@@ -1,0 +1,11 @@
+---
+- name: Update repository
+  yum: 
+    update_cache: yes
+
+# - name: Install Packages
+#  apt:
+#    name:  "{{ packages_to_install }}"
+#    state: latest
+
+
