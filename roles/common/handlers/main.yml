@@ -1,8 +1,10 @@
 ---
 - name: restart firewalld
-  yum:
+  apt:
+    name: firewalld
     state: restarted
 
 - name: restart network-manager
-  yum:
+  apt:
+    name: network-manager
     state: restarted

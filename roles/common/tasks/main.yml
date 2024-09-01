@@ -1,11 +1,33 @@
 ---
 - name: Update repository
-  yum: 
+  apt: 
     update_cache: yes
 
-# - name: Install Packages
-#  apt:
-#    name:  "{{ packages_to_install }}"
-#    state: latest
+# Installation block
+- name: Install Packages
+  apt:
+    name:  "{{ packages_to_install }}"
+    state: latest
 
+- name: Open https service
+  firewalld:
+    service: https
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: Open 443 port
+  firewalld:
+    port: 443/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: firewalld info
+  command: "sudo firewall-cmd --info-zone=public"
+  register: output
+
+- name: Display firewalld info
+  debug: 
+    msg: "{{ output.stdout_lines }}"
 

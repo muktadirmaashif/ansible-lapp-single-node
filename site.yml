@@ -1,8 +1,11 @@
 ---
 - name: setup lamp stack single node
   hosts: lamp
+  become: yes
+  become_method: sudo
+
   roles: 
-    - common
-#    - web
-#    - app
-#    - db
+    # - common
+    - app
+    # - web
+    # - db

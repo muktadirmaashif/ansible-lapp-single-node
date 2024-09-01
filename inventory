@@ -1,6 +1,5 @@
 [lamp]
-192.168.122.118
-
+192.168.100.15 ansible_connection=ssh 
 
 
     
