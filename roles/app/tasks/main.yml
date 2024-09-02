@@ -14,3 +14,13 @@
     msg: 
       - "pip list: {{ pipfreeze.stdout_lines }}"
 
+- name: Create flask src directory
+  file: 
+    path: ~/flask-hello
+    state: directory
+    recurse: yes
+
+- name: Copy app.py
+  copy:
+    src: src
+    dest: ~/flask-hello

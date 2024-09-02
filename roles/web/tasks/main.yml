@@ -1,0 +1,9 @@
+---
+- name: Install web packages
+  apt:
+    name: "{{ web_packages }}"
+    state: latest
+
+- name: Set vhost
+- name: set wsgi file
+- 
