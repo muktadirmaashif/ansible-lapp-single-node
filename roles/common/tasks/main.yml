@@ -3,10 +3,9 @@
   apt: 
     update_cache: yes
 
-# Installation block
 - name: Install Packages
   apt:
-    name:  "{{ packages_to_install }}"
+    name:  "{{ system_packages }}"
     state: latest
 
 - name: Open https service
@@ -30,4 +29,15 @@
 - name: Display firewalld info
   debug: 
     msg: "{{ output.stdout_lines }}"
+
+- name: Install packages
+  apt: 
+    name: "{{ python_packages }}"
+    state: latest
+
+- name: Upgrade pip
+  pip:
+    name: pip
+    state: latest
+    executable: pip3
 

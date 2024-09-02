@@ -1,50 +1,16 @@
 ---
-- name: Install packages
-  apt: 
-    name: "{{ packages }}"
-    state: latest
-
-- name: Upgrade pip
+- name: Install flask in env
   pip:
-    name: pip
-    state: latest
-    executable: pip3
+    name: "{{ pip_install }}"
+    virtualenv: ~/.flask-env
 
-- name: Configure virtualenv
-  command: "python3 -m venv flask-env"
+- name: Display pip freeze
+  shell: ". {{ flask_env }} && pip freeze"
+  #shell: "pip freeze"
+  register: pipfreeze
 
-- name: Change file permission of venv
-  file: 
-    path: ~/flask-env
-    state: directory
-    owner: lamp
-    group: sudo
-    recurse: yes
-  become: yes
-
-- name: Activate venv
-  command: ". flask-env/bin/activate"
-
-- name: pip location
-  command: "which pip"
-  register: whichpip
-   
-- name: Display pip location
+- name: Display Output
   debug: 
-    msg: "{{ whichpip.stdout_lines }}"
-
-# - name: Install flask 
-#   pip:
-#     name: 
-#       - flask
-#       - mysql-connector-python
-#     state: latest
-#
-# - name: create requirements.txt
-#   shell: "pip freeze > requirements.txt && cat requirements.txt"
-#   register: require
-#
-# - name: Display requirements.txt
-#   debug: 
-#     msg: "{{ require.stdout_lines }}"
+    msg: 
+      - "pip list: {{ pipfreeze.stdout_lines }}"
 

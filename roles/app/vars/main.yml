@@ -1,7 +1,8 @@
 --- 
-packages:
-  - python3-pip
-  - python3-pymysql
-  - python3-mysqldb
-  - python3-venv
+pip_install:
+  - flask
+  - mysql_connector_python
 
+flask_env: ~/.flask-env/bin/activate
+flask_export: "export FLASK_APP=app.py"
+flask_host: 0.0.0.0
