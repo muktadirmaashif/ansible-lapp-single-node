@@ -1,0 +1,20 @@
+---
+- name: Database package installation block
+  block:
+  - name: Install packages
+    apt: 
+      name: "{{ db_packages }}"
+      state: latest
+  - name: Start and enable database
+    systemd:
+      name: mariadb
+      state: started
+      enabled: yes
+  become: yes
+  become_method: sudo
+  rescue:
+    - name: Rescue task
+      debug:
+        msg: "databse packages installation block failed"
+
+
