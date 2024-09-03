@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-  ServerName 192.168.122.100
+  ServerName 192.168.100.15
   DocumentRoot {{ app_root }}
 
   WSGIDaemonProcess flaskhello user=lamp group=lamp threads=5 python-home={{ python_home }}

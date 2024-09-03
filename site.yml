@@ -3,11 +3,11 @@
   hosts: lamp
 
   roles: 
-#     - role: common
-#       become: yes
-#       become_method: sudo
-    - role: web
-      become: yes
-      become_method: sudo
-#     - app
-#     - db
+    # - role: common
+    #   become: yes
+    #   become_method: sudo
+    # - app
+    # - role: web
+    #   become: yes
+    #   become_method: sudo
+    - db

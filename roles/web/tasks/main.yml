@@ -20,7 +20,12 @@
   template:
     src: flask-hello.wsgi.j2
     dest: "{{ app_root }}/flask-hello.wsgi"
+    owner: lamp
+    group: lamp
   notify: restart apache2
+
+- name: disable mpm_event module
+  shell: "a2dismod mpm_event"
 
 - name: enable apache2 module
   apache2_module:
@@ -30,15 +35,10 @@
     - ssl
     - rewrite
     - wsgi
+    - mpm_prefork
   notify: restart apache2
 
-- name: enable apache2 module
-  apache2_module:
-    name: mpm_event
-    state: absent
-  notify: restart apache2
-
-- name: enable apache2 module
+- name: enable flask site
   command: a2ensite flask-hello
   args:
     creates: "{{ vhost_dest }}/flask-hello.conf"
