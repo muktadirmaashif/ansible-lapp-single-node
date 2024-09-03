@@ -15,9 +15,16 @@
     state: enabled
     immediate: true
 
-- name: Open 443 port
+- name: Open 80 port
   firewalld:
-    port: 443/tcp
+    port: 80/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: Open 5000 port
+  firewalld:
+    port: 5000/tcp
     permanent: true
     state: enabled
     immediate: true
@@ -29,15 +36,4 @@
 - name: Display firewalld info
   debug: 
     msg: "{{ output.stdout_lines }}"
-
-- name: Install packages
-  apt: 
-    name: "{{ python_packages }}"
-    state: latest
-
-- name: Upgrade pip
-  pip:
-    name: pip
-    state: latest
-    executable: pip3
 

@@ -6,9 +6,4 @@ system_packages:
   - curl
   - git
 
-python_packages:
-  - python3-pip
-  - python3-pymysql
-  - python3-mysqldb
-  - python3-virtualenv
 

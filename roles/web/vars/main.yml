@@ -1,4 +1,13 @@
 ---
 web_packages:
-  - libapache2-mod-wsgi-py3
   - apache2
+  - libapache2-mod-wsgi-py3
+
+app_root: /home/lamp/flask-hello
+python_home: /home/lamp/.flask-env
+
+vhost_dest: /etc/apache2/sites-available
+
+rotate_logs_bin: /usr/bin/rotatelogs
+error_log_loc: /tmp/flask-error.log
+access_log_loc: /tmp/flask-access.log

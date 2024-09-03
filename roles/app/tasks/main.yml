@@ -1,4 +1,23 @@
 ---
+- name: App package installation block
+  block:
+  - name: Install packages
+    apt: 
+      name: "{{ python_packages }}"
+      state: latest
+
+  - name: Upgrade pip
+    pip:
+      name: pip
+      state: latest
+      executable: pip3
+  become: yes
+  become_method: sudo
+  rescue:
+    - name: Rescue task
+      debug:
+        msg: "app packages installation block failed"
+
 - name: Install flask in env
   pip:
     name: "{{ pip_install }}"
@@ -24,3 +43,4 @@
   copy:
     src: src
     dest: ~/flask-hello
+

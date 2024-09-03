@@ -4,6 +4,48 @@
     name: "{{ web_packages }}"
     state: latest
 
-- name: Set vhost
-- name: set wsgi file
-- 
+- name: Start and enable apache2
+  systemd: 
+    name: apache2
+    state: started
+    enabled: yes
+
+- name: Set vhost config
+  template:
+    src: flask-hello.conf.j2
+    dest: "{{ vhost_dest }}/flask-hello.conf"
+  notify: restart apache2
+
+- name: set wsgi config
+  template:
+    src: flask-hello.wsgi.j2
+    dest: "{{ app_root }}/flask-hello.wsgi"
+  notify: restart apache2
+
+- name: enable apache2 module
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ssl
+    - rewrite
+    - wsgi
+  notify: restart apache2
+
+- name: enable apache2 module
+  apache2_module:
+    name: mpm_event
+    state: absent
+  notify: restart apache2
+
+- name: enable apache2 module
+  command: a2ensite flask-hello
+  args:
+    creates: "{{ vhost_dest }}/flask-hello.conf"
+  notify: restart apache2
+
+- name: reload Apache
+  systemd:
+    name: apache2
+    state: reloaded
+
