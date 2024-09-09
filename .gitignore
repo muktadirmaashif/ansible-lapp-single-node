@@ -1,4 +1,0 @@
-inventory
-host_vars/
-ansible.cfg
-roles/web/templates/flask-hello.conf.j2
