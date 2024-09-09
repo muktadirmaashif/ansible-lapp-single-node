@@ -1,20 +1,106 @@
 ---
 - name: Database package installation block
   block:
+  - name: Add postgres gpg key
+    apt_key:
+      url: "{{ postgres_key_url }}"
+      keyring: "{{ postgres_key_file }}"
+      state: present
+
+  - name: Add postgres repo
+    apt_repository:
+      repo: "deb {{ postgres_repo_url }}"
+      filename: "{{ postgres_repo_file }}"
+      state: present
+
   - name: Install packages
     apt: 
       name: "{{ db_packages }}"
-      state: latest
+      state: present
+      update_cache: yes
+
   - name: Start and enable database
     systemd:
-      name: mariadb
+      name: postgresql
       state: started
       enabled: yes
+
+  - name: Create postgres data directory
+    file:
+      path: "{{ postgres_data_dir }}"
+      state: directory
+      owner: "{{ postgres_user }}"
+      group: "{{ postgres_group }}"
+      recurse: yes
+      mode: "0700"
+
+  - name: Create postgres.conf
+    template:
+      src: postgresql.conf.j2
+      dest: "{{ postgres_config_dir }}/postgresql.conf"
+      owner: "{{ postgres_user }}"
+      group: "{{ postgres_group }}"
+      mode: "0644"
+    notify: restart postgres
+
+  - name: Create pg_hba.conf
+    template:
+      src: pg_hba.conf.j2
+      dest: "{{ postgres_config_dir }}/pg_hba.conf" 
+      owner: "{{ postgres_user }}"
+      group: "{{ postgres_group }}"
+      mode: "0640"
+    notify: restart postgres
+
   become: yes
   become_method: sudo
   rescue:
     - name: Rescue task
       debug:
-        msg: "databse packages installation block failed"
+        msg: "databse configure block failed"
 
 
+- name: DB and user block
+  block:
+#   - name: set password to postgres db user 
+#     postgresql_user:
+#       name: "{{ postgres_user }}"
+#       password: "{{ postgres_password }}"
+#       role_attr_flags: SUPERUSER
+
+  - name: Create flask database
+    postgresql_db:
+      name: "{{ flask_db_name }}"
+      state: present
+
+  - name: Create flask db user 
+    postgresql_user:
+      name: "{{ flask_db_user }}"
+      password: "{{ flask_user_password }}"
+      role_attr_flags: CREATEDB
+      db: "{{ flask_db_name }}" 
+
+  - name: Grant db privs to db user
+    postgresql_privs:
+      type: database
+      db: "{{ flask_db_name }}"
+      roles: "{{ flask_db_user }}"
+      privs: ALL
+
+  become: yes
+  become_method: sudo
+  # become_user: "{{ postgres_user }}"
+  environment:
+    PGUSER: "{{ postgres_user }}"
+
+  rescue:
+    - name: Rescue task
+      debug:
+        msg: "db and user block failed"
+
+- name: Reload postgres
+  become: yes
+  become_method: sudo
+  systemd:
+    name: postgresql
+    state: reloaded

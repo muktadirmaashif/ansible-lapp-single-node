@@ -1,0 +1,18 @@
+---
+postgres_repo_url: 'https://apt.postgresql.org/pub/repos/apt focal-pgdg main'
+postgres_repo_file: '/etc/apt/sources.list.d/pgdg.list'
+
+postgres_key_url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+postgres_key_file: '/etc/apt/trusted.gpg.d/postgresql.gpg'
+
+postgres_v: 16
+postgres_data_dir: "/var/lib/postgresql/{{ postgres_v }}/main"
+postgres_config_dir: "/etc/postgresql/{{ postgres_v }}/main"
+
+postgres_user: "postgres"
+postgres_group: "postgres"
+postgres_password: postgres
+
+# postgres_listen_addresses: "*"  # Changed to allow connections from Apache
+postgres_listen_addresses: "localhost,192.168.122.100"  # Changed to allow connections from Apache
+postgres_port: 5432

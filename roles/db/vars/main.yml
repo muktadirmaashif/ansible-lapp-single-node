@@ -1,5 +1,11 @@
 ---
+
+flask_db_name: "flaskdb"
+flask_db_user: "lamp"
+flask_user_password: "lamp_password"
+
 db_packages:
-  - mariadb-server
-  - python3-pymysql
-  - python3-mysqldb
+  - postgresql
+  - postgresql-client
+  - postgresql-contrib
+  - libpq-dev

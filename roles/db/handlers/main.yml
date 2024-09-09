@@ -1,5 +1,5 @@
 ---
-- name: restart databse
+- name: restart postgres
   systemd:
-    name: mariadb
+    name: postgresql
     state: restarted
