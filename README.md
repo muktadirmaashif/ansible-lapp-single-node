@@ -70,8 +70,8 @@ This project sets up a LAPP (Linux, Apache, Postgresql, Python) stack using Ansi
 
 
 ## Run the playbook:
-    - Execute the playbook using the command: `ansible-playbook site.yml -K`.
-    - Try a dry check (syntax, etc) before making actual changes.
+   - Execute the playbook using the command: `ansible-playbook site.yml -K`.
+   - Try a dry check (syntax, etc) before making actual changes.
 
 ## To-Do
 - Secure sensitive data:
