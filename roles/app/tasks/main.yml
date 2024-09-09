@@ -28,10 +28,10 @@
   #shell: "pip freeze"
   register: pipfreeze
 
-- name: Display Output
-  debug: 
-    msg: 
-      - "pip list: {{ pipfreeze.stdout_lines }}"
+# - name: Display Output
+#   debug: 
+#     msg: 
+#       - "pip list: {{ pipfreeze.stdout_lines }}"
 
 - name: Create flask src directory
   file: 

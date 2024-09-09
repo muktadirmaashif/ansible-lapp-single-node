@@ -9,5 +9,5 @@ python_home: /home/lamp/.flask-env
 vhost_dest: /etc/apache2/sites-available
 
 rotate_logs_bin: /usr/bin/rotatelogs
-error_log_loc: /tmp/flask-error.log
-access_log_loc: /tmp/flask-access.log
+error_log_loc: /var/log/apache2/flask-error.log
+access_log_loc: /var/log/apache2/flask-access.log

@@ -33,7 +33,7 @@
   command: "sudo firewall-cmd --info-zone=public"
   register: output
 
-- name: Display firewalld info
-  debug: 
-    msg: "{{ output.stdout_lines }}"
+# - name: Display firewalld info
+#   debug: 
+#     msg: "{{ output.stdout_lines }}"
 

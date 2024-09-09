@@ -5,7 +5,8 @@ python_packages:
 
 pip_install:
   - flask
-  - mysql_connector_python
+  - flask-sqlalchemy
+  - psycopg2
 
 flask_env: ~/.flask-env/bin/activate
 flask_export: "export FLASK_APP=~/flask-hello/src/app.py"
